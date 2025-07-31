@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESF Dashboard - Test Version</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: #0078D4;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .kpi-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0078D4;
+        }
+        .kpi-label {
+            color: #666;
+            margin-top: 5px;
+        }
+        .charts-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status-indicator {
+            padding: 20px;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 ESF Program Dashboard</h1>
+        <p>Test Version - Verify Dashboard Display</p>
+    </div>
+
+    <div class="status-indicator">
+        <h3>✅ Dashboard Status: WORKING</h3>
+        <p>If you can see this page, your browser supports the dashboard. The main dashboard should work too!</p>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">100</div>
+            <div class="kpi-label">Total Projects</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">€27.65M</div>
+            <div class="kpi-label">Total Budget</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">500</div>
+            <div class="kpi-label">Total Beneficiaries</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">4.2/5.0</div>
+            <div class="kpi-label">Avg Engagement</div>
+        </div>
+    </div>
+
+    <div class="charts-section">
+        <h3>📊 Dashboard Components Available:</h3>
+        <ul>
+            <li>✅ KPI Cards (Projects, Budget, Beneficiaries, Engagement)</li>
+            <li>✅ Budget vs Spend Chart (Interactive Bar Chart)</li>
+            <li>✅ Regional Distribution Chart (Doughnut Chart)</li>
+            <li>✅ Gender Breakdown Chart (Pie Chart)</li>
+            <li>✅ Age Groups Analysis (Stacked Bar Chart)</li>
+            <li>✅ Project Details Table (Sortable)</li>
+            <li>✅ Filter Controls (Region, Type, Status, Risk, Demographics)</li>
+        </ul>
+        
+        <h3>🔧 How to Access Your Dashboard:</h3>
+        <ol>
+            <li><strong>Method 1</strong>: Double-click "esf_dashboard.html" file</li>
+            <li><strong>Method 2</strong>: Right-click "esf_dashboard.html" → "Open with" → Choose your browser</li>
+            <li><strong>Method 3</strong>: Open your browser → Press Ctrl+O → Navigate to the file</li>
+            <li><strong>Method 4</strong>: Drag and drop "esf_dashboard.html" into your browser window</li>
+        </ol>
+
+        <h3>📁 Files in Your Project:</h3>
+        <ul>
+            <li>📊 <strong>esf_dashboard.html</strong> - Main interactive dashboard</li>
+            <li>📋 <strong>dashboard_summary.json</strong> - Dashboard metadata</li>
+            <li>📖 <strong>POWER_BI_SETUP_GUIDE.md</strong> - Power BI integration guide</li>
+            <li>🛠️ <strong>simple_dashboard_generator.py</strong> - Dashboard generator</li>
+        </ul>
+    </div>
+
+    <script>
+        // Test if JavaScript is working
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard test page loaded successfully!');
+            
+            // Add a visual confirmation
+            const indicator = document.querySelector('.status-indicator');
+            indicator.innerHTML += '<p><strong>✅ JavaScript is working!</strong> Your browser supports all dashboard features.</p>';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1590 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESF Program Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0078D4, #005A9E);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .kpi-label {
+            color: #666;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+        
+        .filters {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        
+        .filters h3 {
+            color: #0078D4;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e1e1e1;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #0078D4;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e1e1e1;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .risk-high { background-color: #ffebee; }
+        .risk-medium { background-color: #fff3e0; }
+        .risk-low { background-color: #e8f5e8; }
+        
+        .status-active { color: #4caf50; font-weight: bold; }
+        .status-completed { color: #2196f3; font-weight: bold; }
+        .status-planning { color: #ff9800; font-weight: bold; }
+        .status-hold { color: #f44336; font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .kpi-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 ESF Program Dashboard</h1>
+        <p>Interactive Business Intelligence Dashboard for European Social Fund Projects</p>
+    </div>
+    
+    <div class="container">
+        <!-- KPI Cards Section -->
+        <div class="kpi-section">
+            <div class="kpi-card">
+                <div class="kpi-value" style="color: #0078D4;">100</div>
+                <div class="kpi-label">Total Projects</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value" style="color: #107C10;">€27,652,455</div>
+                <div class="kpi-label">Total Budget</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value" style="color: #FF8C00;">500</div>
+                <div class="kpi-label">Total Beneficiaries</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value" style="color: #D13438;">0.0/5.0</div>
+                <div class="kpi-label">Avg Engagement Score</div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Filters Panel -->
+            <div class="filters">
+                <h3>📍 Filters</h3>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Region</label>
+                    <select id="regionFilter" onchange="applyFilters()">
+                        <option value="all">All Regions</option>
+                        <option value="Cork">Cork</option>
+<option value="Dublin">Dublin</option>
+<option value="Galway">Galway</option>
+<option value="Kilkenny">Kilkenny</option>
+<option value="Limerick">Limerick</option>
+<option value="Waterford">Waterford</option>
+
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Project Type</label>
+                    <select id="typeFilter" onchange="applyFilters()">
+                        <option value="all">All Types</option>
+                        <option value="Digital Skills">Digital Skills</option>
+<option value="Entrepreneurship">Entrepreneurship</option>
+<option value="Green Skills">Green Skills</option>
+<option value="Skills Development">Skills Development</option>
+<option value="Social Inclusion">Social Inclusion</option>
+<option value="Youth Employment">Youth Employment</option>
+
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select id="statusFilter" onchange="applyFilters()">
+                        <option value="all">All Statuses</option>
+                        <option value="Active">Active</option>
+<option value="Completed">Completed</option>
+<option value="On Hold">On Hold</option>
+<option value="Planning">Planning</option>
+
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Risk Flag</label>
+                    <select id="riskFilter" onchange="applyFilters()">
+                        <option value="all">All Risk Levels</option>
+                        
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Gender</label>
+                    <select id="genderFilter" onchange="applyFilters()">
+                        <option value="all">All Genders</option>
+                        <option value="Female">Female</option>
+<option value="Male">Male</option>
+<option value="Other">Other</option>
+<option value="Prefer not to say">Prefer not to say</option>
+
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Age Group</label>
+                    <select id="ageFilter" onchange="applyFilters()">
+                        <option value="all">All Ages</option>
+                        <option value="18-24">18-24</option>
+<option value="25-34">25-34</option>
+<option value="35-44">35-44</option>
+<option value="45-54">45-54</option>
+<option value="55-64">55-64</option>
+<option value="65+">65+</option>
+
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Charts Section -->
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-title">💰 Budget vs. Actual Spend (Top 10)</div>
+                    <canvas id="budgetChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">🗺️ Projects by Region</div>
+                    <canvas id="regionChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">👥 Beneficiary Gender Breakdown</div>
+                    <canvas id="genderChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">📊 Age Groups by Region</div>
+                    <canvas id="ageRegionChart"></canvas>
+                </div>
+                
+                <div class="chart-container full-width">
+                    <div class="chart-title">📋 Project Details Table</div>
+                    <div class="table-container">
+                        
+        <table>
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Type</th>
+                    <th>Region</th>
+                    <th>Status</th>
+                    <th>Budget</th>
+                    <th>Actual Spend</th>
+                    <th>Engagement</th>
+                    <th>Risk</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+                <tr class="risk-low">
+                    <td><strong>Project 1: Entrepreneurship Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€175,970</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 2: Green Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Galway</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€479,689</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 3: Digital Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€382,054</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 4: Green Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€299,459</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 5: Green Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€325,274</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 6: Youth Employment Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-active">Active</td>
+                    <td>€238,820</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 7: Digital Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€161,479</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 8: Digital Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Galway</td>
+                    <td class="status-active">Active</td>
+                    <td>€210,188</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 9: Digital Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Kilkenny</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€391,031</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 10: Green Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€56,477</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 11: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€102,233</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 12: Digital Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€70,701</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 13: Social Inclusion Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Galway</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€68,328</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 14: Green Skills Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€434,957</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 15: Youth Employment Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Cork</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€366,646</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 16: Entrepreneurship Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Cork</td>
+                    <td class="status-active">Active</td>
+                    <td>€263,378</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 17: Social Inclusion Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€94,025</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 18: Social Inclusion Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€271,227</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 19: Youth Employment Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€263,062</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 20: Entrepreneurship Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Galway</td>
+                    <td class="status-active">Active</td>
+                    <td>€127,941</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 21: Green Skills Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Kilkenny</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€245,233</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 22: Skills Development Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Waterford</td>
+                    <td class="status-active">Active</td>
+                    <td>€229,327</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 23: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€327,133</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 24: Youth Employment Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€335,792</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 25: Social Inclusion Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Galway</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€70,387</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 26: Green Skills Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€218,576</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 27: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Dublin</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€331,637</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 28: Skills Development Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Waterford</td>
+                    <td class="status-active">Active</td>
+                    <td>€276,411</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 29: Skills Development Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€435,420</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 30: Digital Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Cork</td>
+                    <td class="status-active">Active</td>
+                    <td>€346,412</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 31: Digital Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€123,320</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 32: Youth Employment Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Limerick</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€81,756</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 33: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Waterford</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€339,089</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 34: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Limerick</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€61,930</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 35: Social Inclusion Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€313,599</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 36: Social Inclusion Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€473,104</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 37: Social Inclusion Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Kilkenny</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€308,963</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 38: Digital Skills Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€224,676</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 39: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Galway</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€339,480</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 40: Entrepreneurship Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€256,214</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 41: Skills Development Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Cork</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€295,528</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 42: Digital Skills Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€473,659</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 43: Green Skills Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€223,746</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 44: Digital Skills Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Galway</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€482,536</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 45: Green Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€457,408</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 46: Skills Development Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Cork</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€138,106</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 47: Youth Employment Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-active">Active</td>
+                    <td>€81,213</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 48: Entrepreneurship Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Waterford</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€95,350</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 49: Skills Development Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€58,200</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 50: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€92,499</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 51: Social Inclusion Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Cork</td>
+                    <td class="status-active">Active</td>
+                    <td>€357,353</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 52: Youth Employment Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€82,035</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 53: Youth Employment Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€193,539</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 54: Skills Development Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Limerick</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€430,194</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 55: Youth Employment Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€60,472</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 56: Green Skills Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Kilkenny</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€416,511</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 57: Youth Employment Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Kilkenny</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€176,835</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 58: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Galway</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€103,174</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 59: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€363,532</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 60: Entrepreneurship Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Waterford</td>
+                    <td class="status-active">Active</td>
+                    <td>€333,024</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 61: Entrepreneurship Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€444,862</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 62: Green Skills Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Waterford</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€380,782</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 63: Digital Skills Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Limerick</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€411,566</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 64: Social Inclusion Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€176,916</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 65: Skills Development Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€129,848</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 66: Entrepreneurship Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Waterford</td>
+                    <td class="status-active">Active</td>
+                    <td>€387,777</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 67: Youth Employment Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€413,076</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 68: Entrepreneurship Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€495,727</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 69: Youth Employment Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Waterford</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€235,678</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 70: Social Inclusion Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Limerick</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€217,408</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 71: Social Inclusion Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€399,386</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 72: Social Inclusion Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Galway</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€203,362</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 73: Youth Employment Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€468,841</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 74: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Waterford</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€436,286</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 75: Social Inclusion Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Cork</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€243,047</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 76: Green Skills Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Limerick</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€387,892</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 77: Youth Employment Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€389,544</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 78: Youth Employment Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Kilkenny</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€96,406</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 79: Entrepreneurship Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Galway</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€456,149</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 80: Youth Employment Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€277,364</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 81: Youth Employment Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Galway</td>
+                    <td class="status-active">Active</td>
+                    <td>€421,906</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 82: Social Inclusion Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Limerick</td>
+                    <td class="status-active">Active</td>
+                    <td>€194,022</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 83: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€452,985</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 84: Social Inclusion Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Cork</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€225,141</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 85: Social Inclusion Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Waterford</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€54,877</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 86: Entrepreneurship Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€457,422</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 87: Skills Development Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Waterford</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€91,079</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 88: Social Inclusion Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Kilkenny</td>
+                    <td class="status-active">Active</td>
+                    <td>€193,691</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 89: Green Skills Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€477,528</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 90: Green Skills Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Limerick</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€477,773</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 91: Youth Employment Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Waterford</td>
+                    <td class="status-active">Active</td>
+                    <td>€308,047</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 92: Green Skills Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-active">Active</td>
+                    <td>€334,327</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 93: Youth Employment Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€251,800</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 94: Skills Development Initiative</strong></td>
+                    <td>Green Skills</td>
+                    <td>Cork</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€181,945</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 95: Entrepreneurship Initiative</strong></td>
+                    <td>Skills Development</td>
+                    <td>Dublin</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€197,899</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 96: Entrepreneurship Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Cork</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€352,633</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 97: Entrepreneurship Initiative</strong></td>
+                    <td>Youth Employment</td>
+                    <td>Kilkenny</td>
+                    <td class="status-completed">Completed</td>
+                    <td>€388,569</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 98: Green Skills Initiative</strong></td>
+                    <td>Entrepreneurship</td>
+                    <td>Kilkenny</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€406,211</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 99: Skills Development Initiative</strong></td>
+                    <td>Digital Skills</td>
+                    <td>Dublin</td>
+                    <td class="status-onhold">On Hold</td>
+                    <td>€405,328</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+                <tr class="risk-low">
+                    <td><strong>Project 100: Green Skills Initiative</strong></td>
+                    <td>Social Inclusion</td>
+                    <td>Waterford</td>
+                    <td class="status-planning">Planning</td>
+                    <td>€91,043</td>
+                    <td>€0</td>
+                    <td>N/A/5.0</td>
+                    <td>N/A</td>
+                </tr>
+            
+            </tbody>
+        </table>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Chart data
+        const chartData = {"budget_vs_spend": [{"name": "Project 68: Entrepre...", "budget": 495727.31, "spend": 0.0}, {"name": "Project 44: Digital ...", "budget": 482535.75, "spend": 0.0}, {"name": "Project 2: Green Ski...", "budget": 479689.38, "spend": 0.0}, {"name": "Project 90: Green Sk...", "budget": 477773.22, "spend": 0.0}, {"name": "Project 89: Green Sk...", "budget": 477527.89, "spend": 0.0}, {"name": "Project 42: Digital ...", "budget": 473659.16, "spend": 0.0}, {"name": "Project 36: Social I...", "budget": 473103.61, "spend": 0.0}, {"name": "Project 73: Youth Em...", "budget": 468840.8, "spend": 0.0}, {"name": "Project 86: Entrepre...", "budget": 457421.89, "spend": 0.0}, {"name": "Project 45: Green Sk...", "budget": 457407.79, "spend": 0.0}], "regions": [{"name": "Dublin", "value": 16}, {"name": "Galway", "value": 11}, {"name": "Cork", "value": 26}, {"name": "Kilkenny", "value": 18}, {"name": "Waterford", "value": 13}, {"name": "Limerick", "value": 16}], "gender": [{"name": "Prefer not to say", "value": 117}, {"name": "Female", "value": 122}, {"name": "Other", "value": 110}, {"name": "Male", "value": 151}], "age_region": {"Kilkenny": {"45-54": 17, "55-64": 16, "35-44": 25, "25-34": 11, "65+": 16, "18-24": 10}, "Limerick": {"45-54": 15, "65+": 12, "25-34": 11, "55-64": 17, "35-44": 14, "18-24": 8}, "Waterford": {"55-64": 15, "65+": 17, "25-34": 18, "35-44": 11, "18-24": 14, "45-54": 13}, "Dublin": {"25-34": 12, "18-24": 13, "65+": 15, "35-44": 8, "45-54": 8, "55-64": 12}, "Cork": {"55-64": 12, "35-44": 18, "18-24": 16, "65+": 12, "25-34": 16, "45-54": 6}, "Galway": {"45-54": 16, "35-44": 13, "55-64": 10, "25-34": 9, "18-24": 23, "65+": 21}}};
+        
+        // Initialize charts
+        function initCharts() {
+            // Budget vs Spend Chart
+            const budgetCtx = document.getElementById('budgetChart').getContext('2d');
+            new Chart(budgetCtx, {
+                type: 'bar',
+                data: {
+                    labels: chartData.budget_vs_spend.map(d => d.name),
+                    datasets: [
+                        {
+                            label: 'Budget',
+                            data: chartData.budget_vs_spend.map(d => d.budget),
+                            backgroundColor: '#0078D4',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Actual Spend',
+                            data: chartData.budget_vs_spend.map(d => d.spend),
+                            backgroundColor: '#107C10',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '€' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Region Distribution Chart
+            const regionCtx = document.getElementById('regionChart').getContext('2d');
+            new Chart(regionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: chartData.regions.map(d => d.name),
+                    datasets: [{
+                        data: chartData.regions.map(d => d.value),
+                        backgroundColor: ['#0078D4', '#107C10', '#FF8C00', '#D13438', '#5C2D91']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                    }
+                }
+            });
+            
+            // Gender Breakdown Chart
+            const genderCtx = document.getElementById('genderChart').getContext('2d');
+            new Chart(genderCtx, {
+                type: 'pie',
+                data: {
+                    labels: chartData.gender.map(d => d.name),
+                    datasets: [{
+                        data: chartData.gender.map(d => d.value),
+                        backgroundColor: ['#0078D4', '#FF8C00', '#107C10', '#D13438']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                    }
+                }
+            });
+            
+            // Age Region Chart (simplified bar chart)
+            const ageRegionCtx = document.getElementById('ageRegionChart').getContext('2d');
+            const regions = Object.keys(chartData.age_region);
+            const ageGroups = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+            
+            new Chart(ageRegionCtx, {
+                type: 'bar',
+                data: {
+                    labels: regions,
+                    datasets: ageGroups.map((age, index) => ({
+                        label: age,
+                        data: regions.map(region => chartData.age_region[region][age] || 0),
+                        backgroundColor: `hsl(${index * 60}, 70%, 50%)`,
+                        borderRadius: 4
+                    }))
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Filter functionality (placeholder)
+        function applyFilters() {
+            console.log('Filters applied - connect to backend for full functionality');
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initCharts);
+    </script>
+</body>
+</html>

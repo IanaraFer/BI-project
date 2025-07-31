@@ -1,0 +1,17 @@
+# ESF+ Projects Dashboard
+
+This Power BI dashboard visualizes European Social Fund Plus (ESF+) projects and beneficiaries.
+
+## Features
+- Interactive map of project locations
+- Funding analysis by region and year
+- Demographic breakdown of beneficiaries
+- Drill-through to individual project details
+
+## Data Sources
+- `esf_projects.csv`: Project metadata and funding
+- `esf_beneficiaries.csv`: Beneficiary demographics
+
+## Tools Used
+- Power BI
+- CSV data modeling

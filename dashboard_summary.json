@@ -1,0 +1,31 @@
+{
+  "dashboard_kpis": {
+    "total_projects": 100,
+    "total_budget": 27652454.589999992,
+    "total_beneficiaries": 500,
+    "avg_engagement": 0.0
+  },
+  "data_overview": {
+    "projects_count": 100,
+    "beneficiaries_count": 500,
+    "unique_regions": 6,
+    "unique_project_types": 6
+  },
+  "charts_included": [
+    "KPI Cards (Total Projects, Budget, Beneficiaries, Engagement)",
+    "Budget vs Actual Spend (Bar Chart)",
+    "Projects by Region (Doughnut Chart)",
+    "Beneficiary Gender Breakdown (Pie Chart)",
+    "Age Groups by Region (Stacked Bar Chart)",
+    "Project Details Table (Sortable)"
+  ],
+  "filters_available": [
+    "Region",
+    "Project Type",
+    "Status",
+    "Risk Flag",
+    "Gender",
+    "Age Group"
+  ],
+  "generated_at": "2025-07-31T11:47:04.007353"
+}
