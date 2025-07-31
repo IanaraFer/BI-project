@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>ESF Program Dashboard</title>
     <meta charset="UTF-8">
@@ -67,6 +67,20 @@
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 10px;
+        }
+        .kpi-value-blue {
+            color: #0078D4;
+        }
+        .kpi-value-green {
+            color: #107C10;
+        }
+
+        .kpi-value-orange {
+            color: #FF8C00;
+        }
+
+        .kpi-value-red {
+            color: #D13438;
         }
         
         .kpi-label {
@@ -202,22 +216,22 @@
     </div>
     
     <div class="container">
-        <!-- KPI Cards Section -->
+                <div class="kpi-value kpi-value-blue">100</div>
         <div class="kpi-section">
             <div class="kpi-card">
-                <div class="kpi-value" style="color: #0078D4;">100</div>
-                <div class="kpi-label">Total Projects</div>
+                <div class="kpi-value kpi-value-blue">100</div>
+                <div class="kpi-value kpi-value-green">€27,652,455</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-value" style="color: #107C10;">€27,652,455</div>
-                <div class="kpi-label">Total Budget</div>
-            </div>
-            <div class="kpi-card">
-                <div class="kpi-value" style="color: #FF8C00;">500</div>
+                <div class="kpi-value kpi-value-orange">500</div>
                 <div class="kpi-label">Total Beneficiaries</div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-value" style="color: #D13438;">0.0/5.0</div>
+                <div class="kpi-value kpi-value-red">0.0/5.0</div>
+                <div class="kpi-label">Total Beneficiaries</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value kpi-value-red">0.0/5.0</div>
                 <div class="kpi-label">Avg Engagement Score</div>
             </div>
         </div>
@@ -230,7 +244,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Region</label>
-                    <select id="regionFilter" onchange="applyFilters()">
+                    <select id="regionFilter" title="Region Filter" onchange="applyFilters()">
                         <option value="all">All Regions</option>
                         <option value="Cork">Cork</option>
 <option value="Dublin">Dublin</option>
@@ -244,7 +258,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Project Type</label>
-                    <select id="typeFilter" onchange="applyFilters()">
+                    <select id="typeFilter" title="Project Type Filter" onchange="applyFilters()">
                         <option value="all">All Types</option>
                         <option value="Digital Skills">Digital Skills</option>
 <option value="Entrepreneurship">Entrepreneurship</option>
@@ -258,7 +272,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Status</label>
-                    <select id="statusFilter" onchange="applyFilters()">
+                    <select id="statusFilter" title="Status Filter" onchange="applyFilters()">
                         <option value="all">All Statuses</option>
                         <option value="Active">Active</option>
 <option value="Completed">Completed</option>
@@ -270,7 +284,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Risk Flag</label>
-                    <select id="riskFilter" onchange="applyFilters()">
+                    <select id="riskFilter" title="Risk Level Filter" onchange="applyFilters()">
                         <option value="all">All Risk Levels</option>
                         
                     </select>
@@ -278,7 +292,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Gender</label>
-                    <select id="genderFilter" onchange="applyFilters()">
+                    <select id="genderFilter" title="Gender Filter" onchange="applyFilters()">
                         <option value="all">All Genders</option>
                         <option value="Female">Female</option>
 <option value="Male">Male</option>
@@ -290,7 +304,7 @@
                 
                 <div class="filter-group">
                     <label class="filter-label">Age Group</label>
-                    <select id="ageFilter" onchange="applyFilters()">
+                    <select id="ageFilter" title="Age Group Filter" onchange="applyFilters()">
                         <option value="all">All Ages</option>
                         <option value="18-24">18-24</option>
 <option value="25-34">25-34</option>

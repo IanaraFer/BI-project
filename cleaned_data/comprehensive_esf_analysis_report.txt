@@ -1,0 +1,17 @@
+COMPREHENSIVE ESF DATA ANALYSIS REPORT
+================================================================================
+Generated on: 2025-07-31 12:03:06
+================================================================================
+
+SUMMARY DASHBOARD
+----------------------------------------
+Total Projects: 100
+Total Beneficiaries: 500
+Total Budget: €27,652,454.59
+
+Data Quality:
+- Projects data: ✅ 100 records loaded
+- Beneficiaries data: ✅ 500 records loaded
+
+
+END OF REPORT

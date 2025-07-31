@@ -1,0 +1,37 @@
+{
+  "projects": {
+    "total_projects": 100,
+    "total_budget": 27652454.589999996,
+    "total_esf_funding": 14078719.984000007,
+    "avg_project_budget": 276524.54589999997,
+    "median_project_budget": 276887.445,
+    "esf_funding_rate": 50.91309322352642,
+    "avg_target_achievement": 174.69620000000003,
+    "projects_over_target": 48,
+    "projects_over_target_rate": 48.0,
+    "planning_projects_count": 31,
+    "planning_projects_rate": 31.0,
+    "active_projects_count": 22,
+    "active_projects_rate": 22.0,
+    "completed_projects_count": 21,
+    "completed_projects_rate": 21.0,
+    "on hold_projects_count": 26,
+    "on hold_projects_rate": 26.0
+  },
+  "beneficiaries": {
+    "total_beneficiaries": 500,
+    "total_training_hours": 56592,
+    "avg_training_hours": 113.184,
+    "median_training_hours": 117.0,
+    "avg_satisfaction": 2.924,
+    "high_satisfaction_count": 187,
+    "high_satisfaction_rate": 37.4,
+    "employment_success_count": 192,
+    "employment_success_rate": 38.4
+  },
+  "combined": {
+    "cost_per_beneficiary": 55304.909179999995,
+    "esf_cost_per_beneficiary": 28157.439968000013,
+    "avg_training_hours_per_beneficiary": 113.184
+  }
+}
