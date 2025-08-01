@@ -1,0 +1,31 @@
+beneficiary_id,project_id,gender,age,education_level,training_hours,participation_start,participation_end,outcome_achieved,satisfaction_score
+BEN001,ESF001,Female,28,Bachelor,120,2023-02-01,2023-08-30,Employed,8.5
+BEN002,ESF001,Male,35,High School,100,2023-02-15,2023-09-15,Self-employed,7.8
+BEN003,ESF002,Female,42,Bachelor,80,2023-03-15,2023-10-15,Employed,9.1
+BEN004,ESF002,Male,31,Master,90,2023-03-20,2023-11-20,Employed,8.7
+BEN005,ESF003,Female,26,Bachelor,150,2022-07-01,2023-05-01,Employed,9.3
+BEN006,ESF003,Male,29,Master,140,2022-07-15,2023-05-15,Self-employed,8.9
+BEN007,ESF004,Female,38,High School,70,2023-05-15,2023-12-15,Training Completed,7.2
+BEN008,ESF004,Other,33,Bachelor,85,2023-05-20,2024-01-20,Employed,8.1
+BEN009,ESF005,Male,27,Bachelor,110,2023-02-15,2023-11-15,Employed,9.0
+BEN010,ESF005,Female,31,Master,125,2023-02-20,2023-12-20,Self-employed,8.8
+BEN011,ESF006,Male,24,High School,95,2023-07-15,2024-03-15,Training Completed,7.5
+BEN012,ESF006,Female,22,Bachelor,105,2023-07-20,2024-04-20,Employed,8.3
+BEN013,ESF007,Female,30,Master,130,2023-04-30,2024-01-30,Employed,9.2
+BEN014,ESF007,Male,36,Bachelor,115,2023-05-05,2024-02-05,Self-employed,8.6
+BEN015,ESF008,Female,45,High School,75,2022-09-15,2023-06-15,Training Completed,6.9
+BEN016,ESF008,Male,41,Bachelor,88,2022-09-20,2023-07-20,Employed,7.7
+BEN017,ESF009,Male,32,Master,160,2023-01-15,2023-10-15,Self-employed,9.4
+BEN018,ESF009,Female,28,Bachelor,145,2023-01-20,2023-11-20,Employed,9.1
+BEN019,ESF010,Female,25,Master,135,2023-06-15,2024-03-15,Employed,9.5
+BEN020,ESF010,Female,33,Bachelor,120,2023-06-20,2024-04-20,Self-employed,8.7
+BEN021,ESF011,Male,58,High School,60,2023-08-15,2024-04-15,Training Completed,6.8
+BEN022,ESF011,Female,52,Bachelor,78,2023-08-20,2024-05-20,Employed,7.6
+BEN023,ESF012,Other,39,High School,65,2022-12-01,2023-09-01,Training Completed,7.3
+BEN024,ESF012,Female,44,Bachelor,82,2022-12-05,2023-10-05,Employed,8.0
+BEN025,ESF013,Male,29,Bachelor,140,2023-03-30,2023-12-30,Employed,8.9
+BEN026,ESF013,Female,34,Master,155,2023-04-01,2024-01-01,Self-employed,9.0
+BEN027,ESF014,Female,31,Master,125,2023-09-15,2024-06-15,Employed,8.8
+BEN028,ESF014,Male,37,Bachelor,110,2023-09-20,2024-07-20,Self-employed,8.4
+BEN029,ESF015,Male,26,High School,55,2023-01-25,2023-10-25,Training Completed,6.5
+BEN030,ESF015,Female,23,Bachelor,72,2023-01-30,2023-11-30,Employed,7.4

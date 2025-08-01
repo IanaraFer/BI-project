@@ -1,0 +1,45 @@
+
+ESF DATA VISUALIZATION REPORT
+============================
+Generated: 2025-08-01 12:58:31
+
+DATASETS ANALYZED:
+- Projects: 15 records
+- Beneficiaries: 30 records
+
+VISUALIZATIONS CREATED:
+1. project_overview.png - Project status, budget, and regional distribution
+2. performance_analysis.png - Target achievement and efficiency metrics
+3. beneficiary_analysis.png - Demographics and satisfaction analysis
+4. correlation_analysis.png - Statistical correlations between variables
+5. advanced_insights.png - Executive dashboard with KPIs and trends
+
+KEY INSIGHTS:
+- Total Budget: €34,800,000
+- Average Project Size: €2,320,000
+- Success Rate: 53.3%
+- Average Training Hours: 106.0
+- Average Satisfaction: 8.3/10
+
+TOP PERFORMING REGIONS:
+region
+East       103.700000
+West       102.433333
+Central     99.333333
+
+MOST SUCCESSFUL PROJECT TYPES:
+project_type
+Innovation            108.650000
+Skills Development    106.075000
+Employment Support     94.566667
+
+OUTPUT FORMATS:
+- High-resolution PNG (300 DPI) for presentations
+- Scalable SVG for web and print media
+- All files saved in: visualizations/
+
+RECOMMENDED ACTIONS:
+1. Focus investment in top-performing regions and project types
+2. Investigate factors contributing to low performance areas
+3. Optimize training programs based on satisfaction correlations
+4. Monitor KPIs regularly using the generated dashboards

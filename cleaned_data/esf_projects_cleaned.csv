@@ -1,0 +1,16 @@
+project_id,project_name,start_date,end_date,status,project_type,region,total_budget,esf_funding,target_achievement_rate
+ESF001,Skills Development Program Alpha,2023-01-15,2024-12-31,Active,Skills Development,North,2500000,2000000,105.2
+ESF002,Employment Support Initiative,2023-03-01,2024-08-30,Active,Employment Support,South,1800000,1440000,98.7
+ESF003,Innovation Hub Project,2022-06-15,2024-06-14,Completed,Innovation,East,3200000,2240000,112.5
+ESF004,Social Inclusion Program,2023-05-01,2025-04-30,Active,Social Inclusion,West,1500000,1200000,87.3
+ESF005,Digital Skills Training,2023-02-01,2024-01-31,Completed,Skills Development,Central,2800000,2240000,108.9
+ESF006,Youth Employment Program,2023-07-01,2025-06-30,Active,Employment Support,North,2200000,1760000,95.4
+ESF007,Green Jobs Initiative,2023-04-15,2024-10-15,Active,Innovation,South,2900000,2030000,102.1
+ESF008,Rural Development Project,2022-09-01,2024-08-31,Active,Social Inclusion,East,1600000,1280000,91.8
+ESF009,Tech Startup Incubator,2023-01-01,2024-12-31,Active,Innovation,West,3500000,2450000,118.7
+ESF010,Women in STEM Program,2023-06-01,2025-05-31,Active,Skills Development,Central,2100000,1680000,103.4
+ESF011,Senior Employment Support,2023-08-01,2024-07-31,Active,Employment Support,North,1900000,1520000,89.6
+ESF012,Community Integration Hub,2022-11-15,2024-11-14,Active,Social Inclusion,South,1700000,1360000,94.2
+ESF013,Advanced Manufacturing Training,2023-03-15,2024-09-15,Active,Skills Development,East,2600000,2080000,106.8
+ESF014,Sustainable Business Development,2023-09-01,2025-08-31,Active,Innovation,West,3100000,2170000,101.3
+ESF015,Refugee Integration Program,2023-01-10,2024-12-10,Active,Social Inclusion,Central,1400000,1120000,85.7
